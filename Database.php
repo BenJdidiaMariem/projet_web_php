@@ -23,9 +23,13 @@
             return "Données enregistrées avec succès.";
         }
     
-        public function getPreviousConfigurations() {
-            $result = $this->conn->query("SELECT * FROM model ORDER BY created_at DESC");
-            return $result->fetch_all(MYSQLI_ASSOC);
+        public function getLastHyperparameters() {
+            $stmt = $this->conn->prepare("SELECT * FROM model ORDER BY id DESC LIMIT 1");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            return $row;
         }
+        
     }
 ?>    

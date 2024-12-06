@@ -13,7 +13,6 @@ if (isset($_POST['learningRate'], $_POST['epochs'], $_POST['patience'], $_POST['
     }
       
     $hyperParams = new Hyperparameters($_POST); 
-     // Instancier Hyperparameters avec les paramètres
 } else {
     echo "Des données sont manquantes dans le formulaire.";
     exit;
@@ -32,5 +31,11 @@ $db = new Database('localhost', 'root', '', 'basemodel');
 
 // Enregistrer les paramètres dans la base de données
 echo $db->saveHyperparameters($hyperParams->getParams());
+$lastParams = $db->getLastHyperparameters();  // Récupère les derniers hyperparamètres enregistrés
+
+// Appel du modèle Python avec les hyperparamètres extraits de la base de données
+$modelController = new modelController('dog_species_reduit.py');
+$result = $modelController->runModel($lastParams);
+
 ?>
 
