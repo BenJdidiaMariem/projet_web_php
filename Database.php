@@ -10,8 +10,13 @@
         }
     
         public function saveHyperparameters($params) {
+            var_dump($params);
+            // Utiliser 'imageDirectory' au lieu de 'directory_path'
             $stmt = $this->conn->prepare("INSERT INTO model (Taux_Apprentissage, Nombre_Epoques, Patience, Monitor, Optimiser, Model_Name, Activation_Function, Validation_Split, Test_Split, Directory_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("diissssdds", $params['learningRate'], $params['epochs'], $params['patience'], $params['monitor'], $params['optimizer'], $params['modelName'], $params['activationFunction'], $params['validationSplit'], $params['testSplit'], $params['directoryPath']);
+            
+            // Bind des paramètres, assurez-vous que le nom de la clé est correct (imageDirectory)
+            $stmt->bind_param("diissssdds", $params['learningRate'], $params['epochs'], $params['patience'], $params['monitor'], $params['optimizer'], $params['modelName'], $params['activationFunction'], $params['validationSplit'], $params['testSplit'], $params['imageDirectory']);
+            
             if (!$stmt->execute()) {
                 return "Erreur : " . $stmt->error;
             }

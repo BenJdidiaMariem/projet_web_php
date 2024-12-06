@@ -1,44 +1,36 @@
 <?php
-    require 'ImageDirectory.php';
-    require 'Hyperparameters.php';
-    require 'Database.php';
-    require 'ImageProcessing.php';
-    require 'ResultDisplay.php';
-    
-    // Exemple d'utilisation
-    try {
-        // Récupération et validation du chemin
-        $directory_path = $_POST['imageDirectory'] ?? null;
-    
-        if (empty($directory_path) || !is_string($directory_path)) {
-            throw new Exception("Veuillez fournir un chemin de dossier valide.");
-        }
-    
-        // Instanciation de la classe ImageDirectory
-        $imageDir = new ImageDirectory($directory_path);    
-        
-        // Affiche les images trouvées dans le dossier
-        $imageDir->displayImages();
-    } catch (Exception $e) {
-        echo "<p style='color:red;'>Erreur : " . $e->getMessage() . "</p>";
+require 'Hyperparameters.php';
+require 'Database.php';
+
+// Vérifiez si les données du formulaire sont envoyées via POST
+if (isset($_POST['learningRate'], $_POST['epochs'], $_POST['patience'], $_POST['monitor'], $_POST['optimizer'], $_POST['modelName'], $_POST['activationFunction'], $_POST['validationSplit'], $_POST['testSplit'], $_POST['imageDirectory'])) {
+    $directory_path = $_POST['imageDirectory'];  // Récupérer le chemin des images
+
+    // Vérification si le chemin est vide
+    if (empty($directory_path)) {
+        echo "Le chemin du dossier ne peut pas être vide.";
         exit;
     }
-    
-    $hyperParams = new Hyperparameters($_POST);
-    $errors = $hyperParams->validate();
-    if (!empty($errors)) {
-        echo implode("<br>", $errors);
-        exit;
-    }
-    
-    $db = new Database('localhost', 'root', '', 'basemodel');
-    echo $db->saveHyperparameters($hyperParams->getParams());
-    
-    // $imageProcessor = new ImageProcessing('process_images.py');
-    // $result = $imageProcessor->processImages('images/');
-    // $display = new ResultDisplay();
-    // $display->display($result);
-    
-    // $configs = $db->getPreviousConfigurations();
-    // $display->displayPreviousConfigurations($configs);
-?>     
+      
+    $hyperParams = new Hyperparameters($_POST); 
+     // Instancier Hyperparameters avec les paramètres
+} else {
+    echo "Des données sont manquantes dans le formulaire.";
+    exit;
+}
+
+// Valider les paramètres
+$errors = $hyperParams->validate();
+if (!empty($errors)) {
+    // Si des erreurs sont présentes, les afficher et arrêter l'exécution
+    echo implode("<br>", $errors);
+    exit;
+}
+
+// Connexion à la base de données
+$db = new Database('localhost', 'root', '', 'basemodel');
+
+// Enregistrer les paramètres dans la base de données
+echo $db->saveHyperparameters($hyperParams->getParams());
+?>
+
