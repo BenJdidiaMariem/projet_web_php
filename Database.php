@@ -10,8 +10,7 @@
         }
     
         public function saveHyperparameters($params) {
-            var_dump($params);
-            // Utiliser 'imageDirectory' au lieu de 'directory_path'
+            
             $stmt = $this->conn->prepare("INSERT INTO model (Taux_Apprentissage, Nombre_Epoques, Patience, Monitor, Optimiser, Model_Name, Activation_Function, Validation_Split, Test_Split, Directory_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             
             // Bind des paramètres, assurez-vous que le nom de la clé est correct (imageDirectory)
@@ -29,6 +28,7 @@
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
             return $row;
+            
         }
         
     }

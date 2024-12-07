@@ -42,20 +42,8 @@
             if (empty($model_name)) {
                 $errors[] = "Le nom du modèle ne peut pas être vide.";
             }
-            if ($directory_path != null && $directory_path != "") {
-                if (is_dir($directory_path)) {
-                    // Lire les images si nécessaire
-                    $images = glob($directory_path . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-                    if (empty($images)) {
-                        $errors[] = "Aucune image trouvée dans le dossier.";
-                    }
-                } else {
-                    $errors[] = "Le chemin spécifié n'est pas valide ou n'est pas un dossier.";
-                }
-            } else {
-                $errors[] = "Aucun chemin n'a été soumis.";
-            }
-            if (!in_array($activation_function, ['Sigmoid', 'ReLU', 'Tanh', 'Softmax'])) {
+            
+            if (!in_array($activation_function, ['sigmoid', 'ReLU', 'Tanh', 'Softmax'])) {
                 $errors[] = "La fonction d'activation doit être Sigmoid, ReLU, Tanh ou Softmax.";
             }
             

@@ -6,58 +6,64 @@ import tensorflow as tf
 import tensorflow_hub as hub
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
-
 # Fonction pour définir et entraîner le modèle avec les hyperparamètres donnés
 def train_model(learning_rate, epochs, patience, monitor, optimizer, model_name, activation_function, validation_split, test_split, directory_path):
-    # Configuration du modèle
-    img_size = 224
-    batch_size = 64
-    fpath = directory_path  # Le chemin vers les images
+    try:
+        img_size = 224
+        batch_size = 64
+        fpath = directory_path  # Le chemin vers les images
 
-    # Charger les jeux de données
-    train = tf.keras.utils.image_dataset_from_directory(
-        fpath,
-        validation_split=0.2,
-        subset="training",
-        seed=123,
-        image_size=(img_size, img_size),
-        batch_size=batch_size,
-        label_mode="categorical"
-    )
+        # Charger les jeux de données
+        train = tf.keras.utils.image_dataset_from_directory(
+            fpath,
+            validation_split=validation_split,
+            subset="training",
+            seed=123,
+            image_size=(img_size, img_size),
+            batch_size=batch_size,
+            label_mode="categorical"
+        )
 
-    val = tf.keras.utils.image_dataset_from_directory(
-        fpath,
-        validation_split=0.2,
-        subset="validation",
-        seed=123,
-        image_size=(img_size, img_size),
-        batch_size=batch_size,
-        label_mode="categorical"
-    )
+        val = tf.keras.utils.image_dataset_from_directory(
+            fpath,
+            validation_split=validation_split,
+            subset="validation",
+            seed=123,
+            image_size=(img_size, img_size),
+            batch_size=batch_size,
+            label_mode="categorical"
+        )
 
-    # Modèle de base avec ResNet50 et ajout de couches
-    model_url = 'https://kaggle.com/models/google/resnet-v2/frameworks/TensorFlow2/variations/50-classification/versions/2'
-    model = Sequential([
-        tf.keras.layers.Rescaling(1./255, input_shape=(img_size, img_size, 3)),
-        hub.KerasLayer(model_url),
-        tf.keras.layers.Dense(10, activation=activation_function)
-    ])
+        # Modèle de base avec ResNet50 et ajout de couches
+        model_url = 'https://kaggle.com/models/google/resnet-v2/frameworks/TensorFlow2/variations/50-classification/versions/2'
+        model = Sequential([
+            tf.keras.layers.Rescaling(1./255, input_shape=(img_size, img_size, 3)),
+            hub.KerasLayer(model_url),
+            tf.keras.layers.Dense(10, activation=activation_function)
+        ])
 
-    model.compile(
-        loss=tf.keras.losses.CategoricalCrossentropy(),
-        optimizer=optimizer,
-        metrics=["accuracy"]
-    )
+        model.compile(
+            loss=tf.keras.losses.CategoricalCrossentropy(),
+            optimizer=optimizer,
+            metrics=["accuracy"]
+        )
 
-    # Callbacks pour sauvegarder le meilleur modèle et éviter le surapprentissage
-    model_name = f"{model_name}.h5"
-    checkpoint = ModelCheckpoint(model_name, monitor="val_loss", mode="min", save_best_only=True, verbose=1)
-    earlystopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=1, restore_best_weights=True)
-    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=3, min_lr=0.0001)
+        # Callbacks pour sauvegarder le meilleur modèle et éviter le surapprentissage
+        model_name = f"{model_name}.h5"
+        checkpoint = ModelCheckpoint(model_name, monitor="val_loss", mode="min", save_best_only=True, verbose=1)
+        earlystopping = EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=1, restore_best_weights=True)
+        reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=3, min_lr=0.0001)
 
-    # Entraînement du modèle
-    history = model.fit(train, epochs=epochs, validation_data=val, callbacks=[checkpoint, earlystopping, reduce_lr])
-    return "Model training completed"
+        # Entraînement du modèle
+        history = model.fit(train, epochs=epochs, validation_data=val, callbacks=[checkpoint, earlystopping, reduce_lr])
+
+        # Retourner des informations sur la performance finale
+        accuracy = history.history['accuracy'][-1]
+        val_loss = history.history['val_loss'][-1]
+        return f"Model training completed. Final Accuracy: {accuracy}, Final Validation Loss: {val_loss}"
+
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
 
 # Fonction principale pour gérer les arguments
 def main():
