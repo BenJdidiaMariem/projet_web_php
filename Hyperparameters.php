@@ -35,7 +35,7 @@
                 $errors[] = "Le monitor doit être 'val_loss' ou 'val_accuracy'.";
             }
             
-            if (!in_array($optimizer, ['Adam', 'SGD'])) {
+            if (!in_array($optimizer, ['adam', 'sgd'])) {
                 $errors[] = "L'optimiseur doit être 'Adam' ou 'SGD'.";
             }
             
@@ -43,7 +43,7 @@
                 $errors[] = "Le nom du modèle ne peut pas être vide.";
             }
             
-            if (!in_array($activation_function, ['sigmoid', 'ReLU', 'Tanh', 'Softmax'])) {
+            if (!in_array($activation_function, ['sigmoid', 'relu', 'tanh', 'softmax'])) {
                 $errors[] = "La fonction d'activation doit être Sigmoid, ReLU, Tanh ou Softmax.";
             }
             

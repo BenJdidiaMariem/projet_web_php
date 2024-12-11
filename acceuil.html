@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Classification d'Images</title>
+    <style>
+        @keyframes gradientAnimation {
+    0% { background: linear-gradient(to right, #ff7e5f, #feb47b); }
+    50% { background: linear-gradient(to right, #6a11cb, #2575fc); }
+    100% { background: linear-gradient(to right, #ff7e5f, #feb47b); }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    animation: gradientAnimation 10s ease infinite; /* Animation du dégradé */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+}
+
+        /* Main container */
+        .container {
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #4a90e2;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            width: 45%;
+            padding: 14px 20px;
+            margin: 15px 10px;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 10px;
+            background-color: #007BFF;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: #28a745;
+        }
+
+        .btn-secondary:hover {
+            background-color: #218838;
+        }
+
+        /* Description section */
+        .description {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .description h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .description p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 15px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .description h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Bienvenue sur notre projet</h1>
+            <p>Interface web pour la classification et reconnaissance d'images</p>
+        </div>
+
+        <!-- Description Section -->
+        <div class="description">
+            <h2>À propos du projet</h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis doloribus aspernatur necessitatibus cumque soluta commodi placeat sint sequi ullam ex assumenda, adipisci facilis ad magnam id voluptates ducimus consequuntur voluptatum.
+            </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <a href="authentification.html" class="btn">Authentification</a>
+        <a href="inscription.html" class="btn btn-secondary">Créer un compte</a>
+    </div>
+</body>
+</html>

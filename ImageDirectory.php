@@ -18,9 +18,27 @@ class ImageDirectory {
         }
     }
 
+    // Recherche les images dans le répertoire principal et ses sous-dossiers
     public function getImages() {
-        $images = glob($this->directoryPath . '/*.{jpg,png,gif}', GLOB_BRACE);
-        return $images ?: []; // Retourne un tableau vide si aucune image n'est trouvée
+        $images = [];
+        $this->scanDirectory($this->directoryPath, $images);
+        return $images;
+    }
+
+    private function scanDirectory($directory, &$images) {
+        // Récupère tous les fichiers et sous-dossiers dans le répertoire
+        $files = glob($directory . '/*');
+
+        foreach ($files as $file) {
+            // Si c'est un fichier, on vérifie si c'est une image
+            if (is_file($file) && preg_match('/\.(jpg|png|gif)$/i', $file)) {
+                $images[] = $file;
+            }
+            // Si c'est un sous-dossier, on appelle la fonction récursivement
+            elseif (is_dir($file)) {
+                $this->scanDirectory($file, $images);
+            }
+        }
     }
 
     public function displayImages() {
@@ -29,7 +47,14 @@ class ImageDirectory {
             echo "<p>Aucune image trouvée dans le dossier : {$this->directoryPath}</p>";
         } else {
             foreach ($images as $image) {
-                echo "<img src='$image' alt='Image' style='width:100px;height:auto; margin: 5px;'>";
+                // Remplacer les antislashes par des slashes
+                $imagePath = str_replace('\\', '/', $image);
+
+                // Affichage du chemin de l'image
+                echo "<p>Chemin de l'image : $imagePath</p>"; 
+
+                // Affichage des images
+                echo "<img src='$imagePath' alt='Image' style='width:100px;height:auto; margin: 5px;'>";
             }
         }
     }

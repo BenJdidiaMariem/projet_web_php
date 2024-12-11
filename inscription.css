@@ -1,0 +1,126 @@
+/* Définir les couleurs principales */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --background-color: #f8f9fa;
+    --form-bg-color: #ffffff;
+    --input-border-color: #ced4da;
+    --input-focus-border-color: #007bff;
+  }
+  
+  /* Reset des marges et du padding */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Corps de la page */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  /* Container du formulaire */
+  .form-container {
+    background-color: var(--form-bg-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Titre du formulaire */
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+  }
+  
+  /* Champs de formulaire */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Labels des champs */
+  label {
+    font-weight: 500;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Champs de saisie */
+  input.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Effet au focus */
+  input.form-control:focus {
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    outline: none;
+  }
+  
+  /* Messages d'erreur */
+  .text-danger {
+    font-size: 0.875rem;
+    color: var(--error-color);
+    margin-top: 5px;
+  }
+  
+  /* Bouton de soumission */
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Bouton pour voir/masquer le mot de passe */
+  #passwordIcon {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+    cursor: pointer;
+    color: var(--secondary-color);
+  }
+  
+  #passwordIcon:hover {
+    color: var(--primary-color);
+  }
+  
+  /* Styles pour les icônes FontAwesome */
+  .fas {
+    font-size: 1.2rem;
+  }
+  
+  /* Espacement entre le formulaire et le bas de l'écran */
+  .form-container {
+    margin-top: 50px;
+  }
+  

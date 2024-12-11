@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire d'inscription</title>
+  
+  <!-- Lien vers Bootstrap et FontAwesome pour les icônes -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="inscription.css">
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="form-container">
+      <h2 class="text-center mb-4">Formulaire d'inscription</h2>
+      <form id="registrationForm" action="UserManager.php" method="POST">
+        <input type="hidden" name="action" value="register">
+        
+        <div class="form-group">
+          <label for="firstName">Nom</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" required>
+          <div id="firstNameError" class="text-danger"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="lastName">Prénom</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" required>
+          <div id="lastNameError" class="text-danger"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+          <div id="emailError" class="text-danger"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+          <div id="passwordError" class="text-danger"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm_password">Confirmer le mot de passe</label>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+          <div id="confirmPasswordError" class="text-danger"></div>
+        </div>
+
+        <button type="submit" class="btn btn-submit btn-primary">Créer un compte</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+
+    
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+
+    
+    firstNameInput.addEventListener('input', () => {
+      document.getElementById('firstNameError').textContent = firstNameInput.value.trim() === '' ? "Le nom est requis." : '';
+    });
+
+    lastNameInput.addEventListener('input', () => {
+      document.getElementById('lastNameError').textContent = lastNameInput.value.trim() === '' ? "Le prénom est requis." : '';
+    });
+
+    emailInput.addEventListener('input', () => {
+      document.getElementById('emailError').textContent = emailPattern.test(emailInput.value) ? '' : "L'email n'est pas valide.";
+    });
+
+    
+
+    confirmPasswordInput.addEventListener('input', () => {
+      document.getElementById('confirmPasswordError').textContent = confirmPasswordInput.value === passwordInput.value 
+        ? '' 
+        : "Les mots de passe ne correspondent pas.";
+    });
+
+    
+    document.getElementById('registrationForm').addEventListener('submit', (event) => {
+      event.preventDefault();  
+
+      
+      const isFirstNameValid = firstNameInput.value.trim() !== '';
+      const isLastNameValid = lastNameInput.value.trim() !== '';
+      const isEmailValid = emailPattern.test(emailInput.value);
+      const isPasswordValid = passwordPattern.test(passwordInput.value);
+      const isPasswordConfirmed = confirmPasswordInput.value === passwordInput.value;
+
+      
+      if (!isFirstNameValid) document.getElementById('firstNameError').textContent = "Le nom est requis.";
+      if (!isLastNameValid) document.getElementById('lastNameError').textContent = "Le prénom est requis.";
+      if (!isEmailValid) document.getElementById('emailError').textContent = "L'email n'est pas valide.";
+      
+      if (!isPasswordConfirmed) document.getElementById('confirmPasswordError').textContent = "Les mots de passe ne correspondent pas.";
+      if (isFirstNameValid && isLastNameValid && isEmailValid  && isPasswordConfirmed) {
+        alert("Formulaire soumis avec succès !");
+        event.target.submit(); 
+      }
+    });
+  </script>
+
+  <!-- Scripts Bootstrap et FontAwesome -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -2,11 +2,11 @@
 require 'Hyperparameters.php';
 require 'Database.php';
 require 'modelController.php';
-
+require 'ImageDirectory.php';
 // Vérifiez si les données du formulaire sont envoyées via POST
 if (isset($_POST['learningRate'], $_POST['epochs'], $_POST['patience'], $_POST['monitor'], $_POST['optimizer'], $_POST['modelName'], $_POST['activationFunction'], $_POST['validationSplit'], $_POST['testSplit'], $_POST['imageDirectory'])) {
-    $directory_path = $_POST['imageDirectory'];  // Récupérer le chemin des images
-
+    $directory_path = $_POST['imageDirectory']; 
+   
     // Vérification si le chemin est vide
     if (empty($directory_path)) {
         echo "Le chemin du dossier ne peut pas être vide.";
@@ -35,11 +35,8 @@ echo $db->saveHyperparameters($hyperParams->getParams());
 $lastParams = $db->getLastHyperparameters();  // Récupère les derniers hyperparamètres enregistrés
 var_dump($lastParams);
 // Appel du modèle Python avec les hyperparamètres extraits de la base de données
-$modelController = new modelController('dog_species_reduit.py');
-$result = $modelController->runModel($lastParams);
-echo "<h3>Résultat du modèle :</h3>";
-echo "<pre>";
-print_r($result);  // Si c'est un tableau ou un objet
-echo "</pre>"
+$modelController = new modelController('dog_species_reduit.py',$db);
+$modelController->runModel($lastParams);
+
 ?>
 

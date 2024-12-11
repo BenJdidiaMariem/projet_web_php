@@ -2,9 +2,12 @@
 
 class ModelController {
     private $pythonScriptPath;
+    private $db;
 
-    public function __construct($pythonScriptPath) {
+    
+    public function __construct($pythonScriptPath, $db) {
         $this->pythonScriptPath = $pythonScriptPath;
+        $this->db = $db;  
     }
 
     public function runModel($params) {
@@ -32,7 +35,19 @@ class ModelController {
             echo "Sortie du script Python :<br><pre>$output</pre>";
         }
 
-        // Retourner les résultats du script Python sous forme de tableau PHP (s'ils sont en JSON)
-        return json_decode($output, true);
+        $result = json_decode($output, true);
+
+        if ($result) {
+            
+            $modelName = $params['Model_Name'];
+            $finalAccuracy = $result['final_accuracy'];
+            $finalValLoss = $result['final_val_loss'];
+
+            
+            $this->db->saveModelResults($modelName, $finalAccuracy, $finalValLoss);
+        } else {
+            echo "Erreur lors de l'extraction des résultats du script Python.";
+        }
+        
     }
 }
