@@ -18,20 +18,16 @@
                 <small>Veuillez sélectionner un répertoire contenant des images (formats : .jpg, .jpeg, .png, .gif).</small>
             </div>
 
-            
-            
             <div class="form-group">
                 <label for="learningRate">Taux d’apprentissage (10<sup>-4</sup> à 1) :</label>
                 <input type="number" id="learningRate" name="learningRate" step="0.0001" min="0.0001" max="1" required>
             </div>
 
-            
             <div class="form-group">
                 <label for="epochs">Nombre d’époques (10 à 50) :</label>
                 <input type="number" id="epochs" name="epochs" min="10" max="50" required>
             </div>
 
-            
             <div class="form-group">
                 <label for="patience">Patience :</label>
                 <select id="patience" name="patience" required>
@@ -42,7 +38,6 @@
                 </select>
             </div>
 
-            
             <div class="form-group">
                 <label for="monitor">Monitor :</label>
                 <select id="monitor" name="monitor" required>
@@ -52,7 +47,6 @@
                 </select>
             </div>
 
-            
             <div class="form-group">
                 <label for="optimizer">Optimiseur :</label>
                 <select id="optimizer" name="optimizer" required>
@@ -62,13 +56,11 @@
                 </select>
             </div>
 
-            
             <div class="form-group">
                 <label for="modelName">Nom du modèle :</label>
                 <input type="text" id="modelName" name="modelName" required>
             </div>
 
-            
             <div class="form-group">
                 <label for="activationFunction">Fonction d'activation :</label>
                 <select id="activationFunction" name="activationFunction" required>
@@ -80,7 +72,6 @@
                 </select>
             </div>
 
-            
             <div class="form-group">
                 <label for="validationSplit">Validation Split (0.1 ou 0.2) :</label>
                 <select id="validationSplit" name="validationSplit" required>
@@ -90,7 +81,6 @@
                 </select>
             </div>
 
-            
             <div class="form-group">
                 <label for="testSplit">Test Split (0.1 ou 0.2) :</label>
                 <select id="testSplit" name="testSplit" required>
@@ -99,31 +89,13 @@
                     <option value="0.2">0.2</option>
                 </select>
             </div>
-            
-            
+
             <button type="submit">Soumettre</button>
         </form>
-        <div id="message"></div>
+        <div id="message"></div> 
     </div>
-    <!-- <script>
-        document.getElementById('imageDirectory').addEventListener('change', function(event) {
-            const files = event.target.files;
-            const previewContainer = document.getElementById('imagePreviews');
-            previewContainer.innerHTML = ''; // Clear previous images
-    
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('thumbnail');
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script> -->
-    
+
+   
+
 </body>
 </html>

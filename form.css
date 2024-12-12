@@ -75,8 +75,21 @@ button:hover {
     background-color: #218838;
 }
 
-#message {
-    margin-top: 20px;
-    text-align: center;
-    font-weight: bold;
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    transition: opacity 0.3s ease;
 }
+
+#message {
+    max-width: 600px;
+    margin-top: 20px;
+}
+

@@ -100,41 +100,17 @@
             padding: 12px 15px;
         }
 
-        tbody td:last-child {
-            text-align: center;
-        }
+      
 
-        .edit-btn, .delete-btn {
-            padding: 5px 10px;
-            margin: 0 5px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .edit-btn {
-            background-color: #28a745;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-        }
-
-        .edit-btn:hover {
-            background-color: #218838;
-        }
-
-        .delete-btn:hover {
-            background-color: #c82333;
-        }
-
+       
     
     </style>
 </head>
 <body>
 
     <h2>Gestion des utilisateurs</h2>
+   
+
     
     <table>
         <thead>

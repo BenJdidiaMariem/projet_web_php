@@ -62,17 +62,31 @@
         }
     }
     
-        public function saveHyperparameters($params) {
-            
-            $stmt = $this->conn->prepare("INSERT INTO model (Taux_Apprentissage, Nombre_Epoques, Patience, Monitor, Optimiser, Model_Name, Activation_Function, Validation_Split, Test_Split, Directory_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            
-            // Bind des paramètres, assurez-vous que le nom de la clé est correct (imageDirectory)
-            $stmt->bind_param("diissssdds", $params['learningRate'], $params['epochs'], $params['patience'], $params['monitor'], $params['optimizer'], $params['modelName'], $params['activationFunction'], $params['validationSplit'], $params['testSplit'], $params['imageDirectory']);
-            
-            if (!$stmt->execute()) {
-                return "Erreur : " . $stmt->error;
-            }
-            return "Données enregistrées avec succès.";
+    public function saveHyperparameters($params) {
+        // Vérifier si le nom du modèle existe déjà dans la base de données
+        if ($this->checkIfModelExists($params['modelName'])) {
+            return "Le modèle '{$params['modelName']}' existe déjà dans la base de données.";
+        }
+
+        // Si le modèle n'existe pas, on procède à l'enregistrement
+        $stmt = $this->conn->prepare("INSERT INTO model (Taux_Apprentissage, Nombre_Epoques, Patience, Monitor, Optimiser, Model_Name, Activation_Function, Validation_Split, Test_Split, Directory_path) 
+                                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        
+        // Bind des paramètres
+        $stmt->bind_param("diissssdds", $params['learningRate'], $params['epochs'], $params['patience'], $params['monitor'], $params['optimizer'], $params['modelName'], $params['activationFunction'], $params['validationSplit'], $params['testSplit'], $params['imageDirectory']);
+        
+        if (!$stmt->execute()) {
+            return "Erreur : " . $stmt->error;
+        }
+        return "Données enregistrées avec succès.";
+    }
+        public function checkIfModelExists($modelName) {
+            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM model WHERE Model_Name = ?");
+            $stmt->bind_param("s", $modelName);
+            $stmt->execute();
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            return $count > 0;  // Retourne true si le modèle existe, sinon false
         }
 
     
